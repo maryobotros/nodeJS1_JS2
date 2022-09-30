@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+   <head>
+
+      <title>Communicating from Node.js to an Arduino</title>
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js'></script>
+
+   </head>
+   <body>
+        <h1>Communicating from an Arduino to Node.js</h1>
+        <div id="sample"></div>
+
+      <h1>Communicating from Node.js to an Arduino</h1>
+
+      <button id="lightOn">Turn Light On</button>
+      <button id="lightOff">Turn Light Off</button>
+
+      <script>
+
+      var socket = io();
+
+      socket.on('data', function(data) {
+        console.log(data);
+        document.getElementById('sample').style.opacity = data+"%";
+        });
+
+      document.getElementById('lightOn').onclick = function() {
+        socket.emit('lights', { "status":"1" });
+      };
+
+      document.getElementById('lightOff').onclick = function(){               
+        socket.emit('lights', { "status":"0" });
+      };
+
+      
+
+      </script>
+
+      <style>
+        #sample {
+          background-color: red;
+          width: 300px;
+          height: 300px;
+        }
+      </style>
+
+      
+
+   </body>
+</html>
